@@ -7,24 +7,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" media="screen" href="styles/bootstrap-datetimepicker.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap" rel="stylesheet">
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
   <script type="text/javascript"
     src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="scripts/bootstrap-datetimepicker.min.js"></script>
-
 </head>
 
-<body>
+<body style="font-family: 'Maven Pro', sans-serif;">
   <!-- Display the countdown timer in an element -->
   <div class="container">
-    <div class="row">
-    </div>
     <div class="row">
       <div>
         <div class="well">
           <div class="col-md-12">
             <h5>Inserisci giorno ed ora di INIZIO e clicca il pulsante 'Inizia il countdown'</h5>
-          </div>  
+          </div>
           <div id="datetimepicker2" class="input-append">
             <input data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
             <span class="add-on">
@@ -34,15 +32,17 @@
           </div>
           <div>
             <button type="button" class="btn btn-success" onclick="start_countdown();">INIZIA IL COUNTDOWN</button>
-          </div>  
+          </div>
         </div>
       </div>
     </div>
     <div id="countdown" class="row">
       <div class="col-md-12">
         <div class="alert alert-success text-center rounded-pill" role="alert">
-          <h1><p class="h1" id="demo"></p></h1>
-          <button type="button" id="btnStop" class="btn btn-success"  onclick="stop_countdown();">STOP</button>
+          <h1>
+            <p class="h1" id="demo"></p>
+          </h1>
+          <button type="button" id="btnStop" class="btn btn-success" onclick="stop_countdown();">STOP</button>
         </div>
       </div>
     </div>
@@ -54,65 +54,65 @@
 
     $("#btnStop").hide();
     $("#countdown").hide();
-    
 
-    function start_countdown(){
+
+    function start_countdown() {
 
       $(".well").hide();
       $("#countdown").show();
 
-      
 
-    // Set the date we're counting down to
-    //@@@DC
-    //var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
-    //let date = $('#datetimepicker2').data('datetimepicker').getDate();    
-    let date = $('#datetimepicker2').data('datetimepicker').getLocalDate();    
-    var countDownDate = date.getTime();
-    
-    //@@@DC
-    if(x != undefined){
-      clearInterval(x);
-    }
 
-    // Update the count down every 1 second
-    x = setInterval(function () {
+      // Set the date we're counting down to
+      //@@@DC
+      //var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
+      //let date = $('#datetimepicker2').data('datetimepicker').getDate();    
+      let date = $('#datetimepicker2').data('datetimepicker').getLocalDate();
+      var countDownDate = date.getTime();
 
-      // Get today's date and time
-      var now = new Date().getTime();
-
-      // Find the distance between now and the count down date
-      var distance = countDownDate - now;
-
-      // Time calculations for days, hours, minutes and seconds
-      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      // Display the result in the element with id="demo"
-      // document.getElementById("demo").innerHTML =   days + " giorni " + hours + " ore "
-      //   + minutes + " minuti " + seconds + " secondi ";
-
-      document.getElementById("demo").innerHTML =   (days > 0) ? (days + " giorni ") +'' + hours + " ore "
-        + minutes + " minuti " + seconds + " secondi " : '' + hours + " ore "
-        + minutes + " minuti " + seconds + " secondi ";
-
-      // If the count down is finished, write some text
-      if (distance < 0) {
+      //@@@DC
+      if (x != undefined) {
         clearInterval(x);
-        document.getElementById("demo").innerHTML = "E' ORA DI INIZIARE";
       }
-    }, 1000);
 
-    $("#btnStop").show();
+      // Update the count down every 1 second
+      x = setInterval(function () {
+
+        // Get today's date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Display the result in the element with id="demo"
+        // document.getElementById("demo").innerHTML =   days + " giorni " + hours + " ore "
+        //   + minutes + " minuti " + seconds + " secondi ";
+
+        document.getElementById("demo").innerHTML = (days > 0) ? (days + " giorni ") + '' + hours + " ore "
+          + minutes + " minuti " + seconds + " secondi " : '' + hours + " ore "
+          + minutes + " minuti " + seconds + " secondi ";
+
+        // If the count down is finished, write some text
+        if (distance < 0) {
+          clearInterval(x);
+          document.getElementById("demo").innerHTML = "E' ORA DI INIZIARE";
+        }
+      }, 1000);
+
+      $("#btnStop").show();
 
     }
 
-    function stop_countdown(){
+    function stop_countdown() {
 
-      if(x != undefined){
-         clearInterval(x);
+      if (x != undefined) {
+        clearInterval(x);
       }
       $("#btnStop").hide();
       $(".well").show();
@@ -123,7 +123,7 @@
 
   </script>
 
-  
+
   <script type="text/javascript">
 
     $(function () {
