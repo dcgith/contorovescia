@@ -18,13 +18,13 @@
   <!-- Display the countdown timer in an element -->
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
-        <h5>Inserisci giorno ed ora di INIZIO e clicca il pulsante 'Inizia il countdown'</h5>
-      </div>
     </div>
     <div class="row">
       <div>
         <div class="well">
+          <div class="col-md-12">
+            <h5>Inserisci giorno ed ora di INIZIO e clicca il pulsante 'Inizia il countdown'</h5>
+          </div>  
           <div id="datetimepicker2" class="input-append">
             <input data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
             <span class="add-on">
@@ -38,11 +38,11 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div id="countdown" class="row">
       <div class="col-md-12">
         <div class="alert alert-success text-center rounded-pill" role="alert">
           <h1><p class="h1" id="demo"></p></h1>
-          
+          <button type="button" id="btnStop" class="btn btn-success"  onclick="stop_countdown();">STOP</button>
         </div>
       </div>
     </div>
@@ -52,7 +52,17 @@
   <script>
     var x;
 
+    $("#btnStop").hide();
+    $("#countdown").hide();
+    
+
     function start_countdown(){
+
+      $(".well").hide();
+      $("#countdown").show();
+
+      
+
     // Set the date we're counting down to
     //@@@DC
     //var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
@@ -95,9 +105,20 @@
       }
     }, 1000);
 
+    $("#btnStop").show();
+
     }
 
-    //start_countdown();
+    function stop_countdown(){
+
+      if(x != undefined){
+         clearInterval(x);
+      }
+      $("#btnStop").hide();
+      $(".well").show();
+      $("#countdown").hide();
+
+    }
 
 
   </script>
