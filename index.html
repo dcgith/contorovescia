@@ -14,9 +14,9 @@
   <script type="text/javascript" src="scripts/bootstrap-datetimepicker.min.js"></script>
 </head>
 
-<body style="font-family: 'Maven Pro', sans-serif;">
+<body style="font-family: 'Maven Pro', sans-serif; height: 500px;">
   <!-- Display the countdown timer in an element -->
-  <div class="container">
+  <div class="container" style="height: 100%; text-align: center;margin-top: 1em;">
     <div class="row">
       <div>
         <div class="well">
@@ -38,11 +38,11 @@
     </div>
     <div id="countdown" class="row">
       <div class="col-md-12">
-        <div class="alert alert-success text-center rounded-pill" role="alert">
-          <h1>
-            <p class="h1" id="demo"></p>
+        <div id="dvTimer" class="alert text-center rounded-pill" role="alert">
+          <h1 class="display-1">
+            <p style="font-size:1.2em" class="h1" id="demo"></p>
           </h1>
-          <button type="button" id="btnStop" class="btn btn-success" onclick="stop_countdown();">STOP</button>
+          <button type="button" id="btnStop" class="btn btn-success" style="margin-top: 1em;" onclick="stop_countdown();">STOP</button>
         </div>
       </div>
     </div>
@@ -51,16 +51,23 @@
 
   <script>
     var x;
+    var lblgiorni;
+    var lblore;
+    var lblminuti;
+    var lblsecondi;
 
     $("#btnStop").hide();
     $("#countdown").hide();
+    $("#dvTimer").addClass("alert-success");
 
 
     function start_countdown() {
-
+      $("#dvTimer").removeClass('alert-danger');
+      $("#dvTimer").removeClass('alert-warning');
+      $("#dvTimer").addClass("alert-success");
       $(".well").hide();
       $("#countdown").show();
-
+      document.getElementById("demo").innerHTML = "";
 
 
       // Set the date we're counting down to
@@ -90,22 +97,53 @@
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // Display the result in the element with id="demo"
-        // document.getElementById("demo").innerHTML =   days + " giorni " + hours + " ore "
-        //   + minutes + " minuti " + seconds + " secondi ";
+        if (days > 1 || days == 0) { lblgiorni = " giorni "; }
+        else { lblgiorni = " giorno "; }
 
-        document.getElementById("demo").innerHTML = (days > 0) ? (days + " giorni ") + '' + hours + " ore "
-          + minutes + " minuti " + seconds + " secondi " : '' + hours + " ore "
-          + minutes + " minuti " + seconds + " secondi ";
+        if (hours > 1 || hours == 0) { lblore = " ore "; }
+        else { lblore = " ora "; }
+
+        if (minutes > 1 || minutes == 0) { lblminuti = " minuti "; }
+        else { lblminuti = " minuto "; }
+
+        if (seconds > 1 || seconds == 0) { lblsecondi = " secondi "; }
+        else { lblsecondi = " secondo "; }
+
+
+        if (days > 0) {
+          document.getElementById("demo").innerHTML = (days + lblgiorni) + '' + hours + lblore
+            + minutes + lblminuti + seconds + lblsecondi;
+        }
+        else {
+          if (hours > 0) {
+            document.getElementById("demo").innerHTML = hours + lblore
+              + minutes + lblminuti+ seconds + lblsecondi;
+          }
+          else {
+            if (minutes > 0) {
+              document.getElementById("demo").innerHTML = minutes + lblminuti + seconds + lblsecondi;
+            }
+            else {
+              document.getElementById("demo").innerHTML = seconds + lblsecondi;
+            }
+          }
+        }
+
+        //@@@DC manca un minuto
+        if (distance < 1000 * 60) {
+          $('.alert-success').addClass('alert-warning').removeClass('alert-success');
+        }
 
         // If the count down is finished, write some text
         if (distance < 0) {
           clearInterval(x);
+          $('.alert-warning').addClass('alert-danger').removeClass('alert-warning');
           document.getElementById("demo").innerHTML = "E' ORA DI INIZIARE";
         }
+        $("#btnStop").show();
+
       }, 1000);
 
-      $("#btnStop").show();
 
     }
 
