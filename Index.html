@@ -12,6 +12,30 @@
   <script type="text/javascript"
     src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="scripts/bootstrap-datetimepicker.min.js"></script>
+
+  <style type="text/css">
+  .blinking {
+            animation: blinkingText 1s infinite;
+        }
+
+  @keyframes blinkingText {
+            from {
+                opacity: 1;
+                }
+            to {
+                opacity: 0;
+                }
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: .5;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+  </style>
 </head>
 
 <body style="font-family: 'Maven Pro', sans-serif; height: 500px;">
@@ -40,7 +64,7 @@
       <div class="col-md-12">
         <div id="dvTimer" class="alert text-center rounded-pill" role="alert">
           <h1 class="display-1">
-            <p style="font-size:1.2em" class="h1" id="demo"></p>
+            <p style="font-size:1.2em" class="h1 blinking" id="p_time"></p>
           </h1>
           <button type="button" id="btnStop" class="btn btn-success" style="margin-top: 1em;" onclick="stop_countdown();">STOP</button>
         </div>
@@ -60,14 +84,14 @@
     $("#countdown").hide();
     $("#dvTimer").addClass("alert-success");
 
-
     function start_countdown() {
       $("#dvTimer").removeClass('alert-danger');
       $("#dvTimer").removeClass('alert-warning');
       $("#dvTimer").addClass("alert-success");
       $(".well").hide();
       $("#countdown").show();
-      document.getElementById("demo").innerHTML = "";
+      document.getElementById("p_time").innerHTML = "";
+      $("#p_time").removeClass('blinking');
 
 
       // Set the date we're counting down to
@@ -111,34 +135,36 @@
 
 
         if (days > 0) {
-          document.getElementById("demo").innerHTML = (days + lblgiorni) + '' + hours + lblore
+          document.getElementById("p_time").innerHTML = (days + lblgiorni) + '' + hours + lblore
             + minutes + lblminuti + seconds + lblsecondi;
         }
         else {
           if (hours > 0) {
-            document.getElementById("demo").innerHTML = hours + lblore
+            document.getElementById("p_time").innerHTML = hours + lblore
               + minutes + lblminuti+ seconds + lblsecondi;
           }
           else {
             if (minutes > 0) {
-              document.getElementById("demo").innerHTML = minutes + lblminuti + seconds + lblsecondi;
+              document.getElementById("p_time").innerHTML = minutes + lblminuti + seconds + lblsecondi;
             }
             else {
-              document.getElementById("demo").innerHTML = seconds + lblsecondi;
+              document.getElementById("p_time").innerHTML = seconds + lblsecondi;
             }
           }
         }
 
         //@@@DC manca un minuto
         if (distance < 1000 * 60) {
+          $("#p_time").addClass('blinking');
           $('.alert-success').addClass('alert-warning').removeClass('alert-success');
         }
 
         // If the count down is finished, write some text
         if (distance < 0) {
           clearInterval(x);
+          $("#p_time").removeClass('blinking');
           $('.alert-warning').addClass('alert-danger').removeClass('alert-warning');
-          document.getElementById("demo").innerHTML = "E' ORA DI INIZIARE";
+          document.getElementById("p_time").innerHTML = "E' ORA DI INIZIARE";
         }
         $("#btnStop").show();
 
